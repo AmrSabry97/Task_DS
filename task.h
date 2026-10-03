@@ -11,13 +11,14 @@ typedef struct tasknode
 
 typedef struct task
 {
-    TaskNode *head, *current;
-    int size, pos;
+    TaskNode *head;
+    int size;
 } Task;
 
 void CreateTask(Task *pt);
 int TaskSize(Task *pt);
-int AddTask(int pos, TaskEntry e, Task *pt);
-int CompletedTask(Task *pt);
+int AddTask(TaskEntry e, Task *pt);
+// int CompletedTask(Task *pt);
+int MoveTask(int pos, Task *todo, Task *completed);
 
 #endif

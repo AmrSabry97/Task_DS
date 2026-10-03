@@ -4,42 +4,86 @@
 void CreateTask(Task *pt)
 {
     pt->head = NULL;
-    pt->current = pt->head;
     pt->size = 0;
 }
 
-int AddTask(int pos, TaskEntry e, Task *pt)
+int AddTask(TaskEntry e, Task *pt)
 {
-    pos = pt->size;
     TaskNode *p;
     p = malloc(sizeof(TaskNode));
 
-    if (p)
-    {
-        p->entry = e;
-        p->next = NULL;
+    if (!p)
+        return 0;
 
+    p->entry = e;
+    p->next = NULL;
+
+    if (pt->size == 0)
+    {
+        pt->head = p;
+    }
+    else
+    {
+        TaskNode *last = pt->head;
+        while (last->next != NULL)
+            last = last->next;
+        last->next = p;
+    }
+    pt->size++;
+    return 1;
+}
+
+int MoveTask(int pos, Task *todo, Task *completed)
+{
+    TaskNode *target;
+    TaskNode *previous;
+
+    if (pos < 0 || pos >= todo->size)
+        return 0;
+    else
+    {
         if (pos == 0)
         {
-            p->next = pt->head;
-            pt->head = p;
-            pt->current = pt->head;
+            target = todo->head;
+            todo->head = todo->head->next;
+                }
+        else
+        {
+            previous = todo->head;
+
+            for (int i = 0; i < pos - 1; i++)
+            {
+                previous = previous->next;
+            }
+            target = previous->next;
+            previous->next = target->next;
+        }
+        todo->size--;
+
+        target->next = NULL;
+
+        if (completed->head == NULL)
+        {
+            completed->head = target;
         }
         else
         {
-            p->next = pt->current->next;
-            pt->current->next = p;
+            TaskNode *last = completed->head;
+
+            while (last->next != NULL)
+            {
+                last = last->next;
+            }
+            last->next = target;
         }
-        pt->size++;
+        completed->size++;
         return 1;
     }
-    else
-        return 0;
 }
 
-int CompletedTask(Task *pt)
+/*int CompletedTask(Task *pt)
 {
-}
+}*/
 
 int TaskSize(Task *pt)
 {
