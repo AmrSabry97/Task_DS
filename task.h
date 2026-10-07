@@ -18,7 +18,8 @@ typedef struct task
 void CreateTask(Task *pt);
 int TaskSize(Task *pt);
 int AddTask(TaskEntry e, Task *pt);
-// int CompletedTask(Task *pt);
 int MoveTask(int pos, Task *todo, Task *completed);
+void TraverseTask(Task *pt, void (*Show)(TaskEntry));
+void DestroyTask(Task *pt);
 
 #endif

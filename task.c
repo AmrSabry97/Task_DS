@@ -46,7 +46,7 @@ int MoveTask(int pos, Task *todo, Task *completed)
         {
             target = todo->head;
             todo->head = todo->head->next;
-                }
+        }
         else
         {
             previous = todo->head;
@@ -81,11 +81,31 @@ int MoveTask(int pos, Task *todo, Task *completed)
     }
 }
 
-/*int CompletedTask(Task *pt)
-{
-}*/
-
 int TaskSize(Task *pt)
 {
     return pt->size;
+}
+
+void TraverseTask(Task *pt, void (*Show)(TaskEntry))
+{
+    TaskNode *p = pt->head;
+
+    while (p)
+    {
+        (*Show)(p->entry);
+        p = p->next;
+    }
+}
+
+void DestroyTask(Task *pt)
+{
+    TaskNode *p = pt->head;
+
+    while (pt->head)
+    {
+        p = pt->head->next;
+        free(pt->head);
+        pt->head = p;
+    }
+    pt->size = 0;
 }
