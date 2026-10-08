@@ -19,7 +19,7 @@ void CreateTask(Task *pt);
 int TaskSize(Task *pt);
 int AddTask(TaskEntry e, Task *pt);
 int MoveTask(int pos, Task *todo, Task *completed);
-void TraverseTask(Task *pt, void (*Show)(TaskEntry));
+void TraverseTask(Task *pt, void (*Show)(int, TaskEntry));
 void DestroyTask(Task *pt);
 
 #endif

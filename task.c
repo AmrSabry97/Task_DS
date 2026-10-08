@@ -86,13 +86,14 @@ int TaskSize(Task *pt)
     return pt->size;
 }
 
-void TraverseTask(Task *pt, void (*Show)(TaskEntry))
+void TraverseTask(Task *pt, void (*Show)(int, TaskEntry))
 {
     TaskNode *p = pt->head;
+    int i = 0;
 
     while (p)
     {
-        (*Show)(p->entry);
+        (*Show)(i++, p->entry);
         p = p->next;
     }
 }
@@ -104,6 +105,7 @@ void DestroyTask(Task *pt)
     while (pt->head)
     {
         p = pt->head->next;
+        free(pt->head->entry);
         free(pt->head);
         pt->head = p;
     }
